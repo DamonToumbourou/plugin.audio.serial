@@ -1,6 +1,6 @@
-Late Night Live Plugin for Kodi
+Serial Plugin for Kodi
 -------------------------------------------
-Listen to Late Night Live on Kodi. 
+Listen to Serial Podcast on Kodi. 
 
 Setup/Installation: 
 The plugin should be installed through the official Kodi addon repository.
@@ -8,5 +8,5 @@ The plugin should be installed through the official Kodi addon repository.
 Contact:
 dtoumbourou@gmail.com
 
-Late Night Live - With Phillip Adams: 
-From razor-sharp analysis of current events to the hottest debates in politics, science, philosophy and culture, Late Night Live puts you firmly in the big picture.
+Serial:
+A podcast from the creators of This American Life. One story. Told week by week. Hosted by Sarah Koenig.

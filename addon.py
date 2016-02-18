@@ -1,9 +1,7 @@
 from xbmcswift2 import Plugin, xbmcgui
-from resources.lib import latenightlive
+from resources.lib import serial
 
 plugin = Plugin()
-
-URL = "http://abc.net.au/radionational/programs/latenightlive"
 
 
 @plugin.route('/')
@@ -11,74 +9,54 @@ def main_menu():
     
     items = [
         {
+            # Season 1
             'label': plugin.get_string(30000),
-            'path': plugin.url_for('latest_podcasts', page_no=1),
-            'thumbnail': "http://a2.mzstatic.com/us/r30/Music4/v4/45/ff/6e/45ff6eb2-18c8-5aa4-e365-bf429a117f4a/cover170x170.jpeg"}, 
+            'path': plugin.url_for('play_season_one'),
+            'thumbnail': 'http://si.wsj.net/public/resources/images/AR-AH827_SERIAL_P_20141113163544.jpg',
+        },
         {
-            'label': plugin.get_string(30001), 
-            'path': plugin.url_for('browse_subjects'),
-            'thumbnail': "http://www.abc.net.au/radionational/image/5698480-3x2-700x467.jpg"},
+            # Season 2
+            'label': plugin.get_string(30001),
+            'path': plugin.url_for('play_season_two'),
+            'thumbnail': 'http://pixel.nymag.com/imgs/daily/intelligencer/2016/01/07/07-bowe-bergdahl.w529.h352.jpg',
+        }
     ]
 
     return items
 
 
-@plugin.route('/latest_podcasts/<page_no>')
-def latest_podcasts(page_no):
-    url = 'http://www.abc.net.au/radionational/programs/latenightlive/past-programs/?page={0}'.format(page_no)
-    next_page = int(page_no) + 1
-
-    items = latenightlive.get_audio(url)
+@plugin.route('/play_season_one/')
+def play_season_one():
     
-    # append next page to list of podcasts
-    items.append(
-            {'label': 'NEXT PAGE',
-             'path': plugin.url_for('latest_podcasts', page_no=next_page)})
+    url = 'https://serialpodcast.org/season-one'
+    content = serial.get_podcast_s1(url)
 
-    return items
-
-
-@plugin.route('/browse_subjects/')
-def browse_subjects():
-    
-    url = "http://www.abc.net.au/radionational/programs/latenightlive/past-programs/subjects/"
-
-    items = []
-
-    subjects = latenightlive.get_subjects(url)
-    
-    for subject in subjects:
-        items.append({
-            'label': subject['title'],
-            'path': plugin.url_for('subject_contents', url=subject['url']),
+    item = []
+    for i in content:
+        item.append({
+            'label': i['label'],
+            'path': i['path'],
+            'is_playable': True,
         })
 
-    return items
+    return item
 
 
-@plugin.route('/browse_subjects/<url>/')
-def subject_contents(url):
+@plugin.route('/play_season_two/')
+def play_season_two():
     
-    items = []
-
-    subjects = latenightlive.get_subjects_contents(url)
+    url = 'http://serialpodcast.org/season-two'
+    content = serial.get_podcast_s2(url)
     
-    for subject in subjects: 
-        items.append({
-            'label': subject['title'],
-            'thumbnail': subject['img'],
-            'path': plugin.url_for('play_subjects', url=subject['url']),
-    })
+    item = []
+    for i in content:
+        item.append({
+            'label': i['label'],
+            'path': i['path'],
+            'is_playable': True,
+        })
 
-    return items
-
-
-@plugin.route('/browse_subjects/subject/<url>/')
-def play_subjects(url):
-
-    items = latenightlive.get_playable_subjects(url)
-        
-    return items
+    return item
 
 
 if __name__ == '__main__':

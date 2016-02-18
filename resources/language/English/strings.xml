@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <!-- Plugin name -->
-  <string id="30000">Latest podcasts</string>
-  <string id="30001">Browse by subject</string>
+  <!-- Serial -->
+  <string id="30000">Season 1</string>
+  <string id="30001">Season 2</string>
 </strings>
